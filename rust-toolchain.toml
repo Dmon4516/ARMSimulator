@@ -1,0 +1,5 @@
+[toolchain]
+channel = "stable"                # stable, or a specific version like "1.83.0" for full reproducibility
+components = ["rustfmt", "clippy"]
+targets = ["aarch64-apple-darwin"] # macOS Apple Silicon (default on M-series)
+profile = "default"

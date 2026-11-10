@@ -1,0 +1,42 @@
+/Info
+# Rust
+/src-tauri/target/
+**/*.rs.bk
+*.pdb
+
+# Node / SvelteKit
+node_modules/
+.svelte-kit/
+build/
+dist/
+.vite/
+
+# Build artifacts (course programs)
+*.elf
+*.o
+*.bin
+
+# Tauri generated
+/src-tauri/gen/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Secrets / local
+.env
+.env.*
+!.env.example
+settings.toml            # per-user; template lives elsewhere
+
+# Test programs outputs (keep sources)
+/tests/programs/**/*.elf
+/tests/programs/**/*.o
+/tests/programs/**/*.bin

@@ -1,0 +1,27 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: corepack enable pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Install ARM GNU toolchain (arm-none-eabi)
+        run: |
+          curl -fsSL -o /tmp/arm.pkg \
+            https://developer.arm.com/-/media/Files/downloads/gnu/15.3.rel2/binrel/arm-gnu-toolchain-15.3.rel2-darwin-arm64-arm-none-eabi.pkg
+          sudo installer -pkg /tmp/arm.pkg -target /
+          echo "/Applications/ArmGNUToolchain/15.3.rel2/bin" >> $GITHUB_PATH
+
+      - run: cd src-tauri && cargo test
+      - run: cd src-tauri && cargo clippy -- -D warnings
+      - run: cd src-tauri && cargo deny check
+      - run: pnpm build
+      - run: pnpm check
